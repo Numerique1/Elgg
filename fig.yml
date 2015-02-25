@@ -1,0 +1,27 @@
+db:
+    image : mysql
+    environment :
+        MYSQL_ROOT_PASSWORD : elgg
+        MYSQL_USER : elgg
+        MYSQL_PASSWORD : elgg
+        MYSQL_DATABASE : elgg
+
+php:
+    build: ./docker/php
+    ports:
+      - "9002:9000"
+    links:
+      db: elgg-db
+    volumes:
+      - /var/www/Elgg:/srv/http
+
+nginx:
+    image: nginx
+    volumes:
+      - /var/www/Elgg:/usr/share/nginx/html:ro
+      - /var/www/Elgg/docker/nginx/nginx-dev.conf:/nginx.conf:ro
+    links:
+        php: elgg-php
+    environment:
+        VIRTUAL_HOST :  elgg.docker,elgg.numerique1.fr
+    command: nginx -c /nginx.conf
