@@ -23,5 +23,5 @@ nginx:
     links:
         php: elgg-php
     environment:
-        VIRTUAL_HOST :  elgg.docker,elgg.numerique1.fr
+        VIRTUAL_HOST :  elgg.numerique1.fr
     command: nginx -c /nginx.conf
